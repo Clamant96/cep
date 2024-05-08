@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+html, body {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+    width: 100%;
+    height: auto;
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+    background-color: var(--background-color-defautl);
 
-.App-link {
-  color: #61dafb;
 }
+  
+:root {
+    --background-color-defautl: #f1f1f1;
+    --backgraund-color-blue: #151D27;
+    --backgraund-color-card: #202B39;
+    --background-color-desconto: rgb(255, 102, 102);
+    --background-color-search: #ffffff;
+    --backgroung-color-cart: rgb(87 105 125 / 27%);
+    --background-color-yellow: #FFE600;
+  
+    --button-carrinho: #435467;
+    --button-valor-card: #5f738a4d;
+    --button-valor-card-hover: #EE2233;
+    --button-acao-pagina: #028DBC;
+    --button-ver-mais: rgba(0, 153, 204, 0.7);
+    --button-pesquisar: #0071ad;
+  
+    --text-color-white: #f9f9f9;
+    --text-color: #FFFFFF;
+    --text-chadow-h2: rgba(0,0,0,.8);
+    --text-color-serach: #a0a0a0;
+    --text-color-qtd-resultados: #96a6b7;
+    --text-color-a: #222222;
+    --text-color-h1: #00416b;
+    --text-color-h2: #00416b;
+    --text-color-h3: #00416b;
+    --text-color-cinza-escuro: #807569;
+  
+    --icon-consoles: #7CA7CF;
+    --icon-consoles-2: #96A6B7;
+    --icon-blue: #00416b;
+  
+    --border-button-add: rgb(67, 84, 103);
+    --border-button-ver-mais: rgb(0, 153, 204);
+    --border-search: #bbbbbb;
+    --border-button-dropdown: rgba(87, 105, 125, 0.563);
+    --border-button-header: #1d2631;
+    --border-logo-1: #F59C21;
+    --border-logo-2: #22B999;
+  
+    --box-shadow-button-card-add: rgba(0, 0, 0, 0.3);
+    --box-shadow-header: #0000004d;
+  
+    --gradient-background-1: #151d27;
+    --gradient-background-2: #151d2780;
+  
+    --hover-menu-1: #F59C21;
+    --hover-menu-2: #22B999;
+    --hover-menu-3: #c508a2;
+    --hover-menu-4: #0310ce;
+  
+    --img-tela-home: url('https://images3.alphacoders.com/204/204599.jpg');
+    --img-tela-categoria: url('https://blog.br.playstation.com/tachyon/sites/4/2022/09/d908d7522435577292289240328239b507ac0beb.jpg?resize=1088%2C612&crop_strategy=smart');
+    --img-tela-console: url('https://png.pngtree.com/background/20230519/original/pngtree-display-of-old-games-and-consoles-picture-image_2652598.jpg');
+    
+    --size-h3: 1.424rem;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
