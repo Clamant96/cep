@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'cep'
+        DOCKER_IMAGE = 'cep-pipeline'
         DOCKER_TAG = 'latest'
     }
 
@@ -25,14 +25,14 @@ pipeline {
             steps {
                 script {
                     // Parar e remover contêiner antigo, se existir
-                    def container = docker.ps().find { it.names.contains('cep') }
+                    def container = docker.ps().find { it.names.contains('cep-pipeline') }
                     if (container) {
                         docker.stop(container.id)
                         docker.rm(container.id)
                     }
                     
                     // Executar novo contêiner
-                    docker.run("${DOCKER_IMAGE}:${DOCKER_TAG}", '-d -p 80:80 --name cep')
+                    docker.run("${DOCKER_IMAGE}:${DOCKER_TAG}", '-d -p 80:80 --name cep-pipeline')
                 }
             }
         }
