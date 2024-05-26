@@ -1,19 +1,3 @@
-FROM jenkins/jenkins:lts
-
-# Instala o Docker no contêiner Jenkins
-USER root
-RUN apt-get update && apt-get install -y docker.io
-
-# Ajusta as permissões para o diretório Jenkins
-RUN chown -R jenkins:jenkins /var/jenkins_home
-
-# Define o usuário para Jenkins
-USER jenkins
-
-# Expor a porta necessária e iniciar Jenkins
-EXPOSE 8080
-CMD ["jenkins"]
-
 # Etapa 1: Build
 FROM node:16-alpine AS build
 
