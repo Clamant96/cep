@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}")
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                     }
                     
                     // Executar novo contêiner
-                    docker.run("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}", '-d -p 80:80 --name cep')
+                    docker.run("${DOCKER_IMAGE}:${DOCKER_TAG}", '-d -p 80:80 --name cep')
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             echo 'Pipeline finalizado'
         }
         success {
-            echo 'Aplicação iniciada com sucesso'
+            echo 'Aplicação subida com sucesso'
         }
         failure {
             echo 'Falha na pipeline'
