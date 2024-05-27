@@ -13,10 +13,15 @@ pipeline {
             }
         }
         
-        stage('Docker Build') {
-            agent any
+        stage('Docker Build') { 
+            agent {
+                docker {
+                    image 'Clamant96/sample_nodejs:latest'
+                    reuseNode true
+                }
+            }
             steps {
-                sh 'docker build -t cep:latest .'
+                echo "Building app using Docker Image" 
             }
         }
 
