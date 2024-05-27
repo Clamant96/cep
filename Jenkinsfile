@@ -16,7 +16,7 @@ pipeline {
         stage('Docker Build') { 
             agent {
                 docker {
-                    image 'Clamant96/sample_nodejs:latest'
+                    image 'Clamant96/cep:latest'
                     reuseNode true
                 }
             }
