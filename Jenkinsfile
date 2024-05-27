@@ -1,52 +1,17 @@
 pipeline {
-    agent any
-
-    environment {
-        DOCKER_IMAGE = 'cep'
-        DOCKER_TAG = 'latest'
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Clamant96/cep'
-            }
+    agent {
+        docker {
+            image 'docker:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
-        
+    }
+    stages {
         stage('Build') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    sh 'docker build -t cep:latest .'
                 }
             }
-        }
-        
-        stage('Run') {
-            steps {
-                script {
-                    // Parar e remover contêiner antigo, se existir
-                    def container = docker.ps().find { it.names.contains('cep') }
-                    if (container) {
-                        docker.stop(container.id)
-                        docker.rm(container.id)
-                    }
-                    
-                    // Executar novo contêiner
-                    docker.run("${DOCKER_IMAGE}:${DOCKER_TAG}", '-d -p 80:80 --name cep')
-                }
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finalizado'
-        }
-        success {
-            echo 'Aplicação subida com sucesso'
-        }
-        failure {
-            echo 'Falha na pipeline'
         }
     }
 }
