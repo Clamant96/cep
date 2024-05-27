@@ -14,4 +14,15 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            echo 'Pipeline finalizado'
+        }
+        success {
+            echo 'Aplicação subida com sucesso'
+        }
+        failure {
+            echo 'Falha na pipeline'
+        }
+    }
 }
