@@ -16,6 +16,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Ensuring Docker is available
+                    sh 'docker --version'
                     docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
