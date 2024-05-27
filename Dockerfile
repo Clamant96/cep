@@ -1,3 +1,12 @@
+FROM jenkins/jenkins:latest
+
+# Criando um usuário 'jenkins' dentro do contêiner
+RUN groupadd -g 1000 jenkins \
+    && useradd -u 1000 -g jenkins -m -s /bin/bash jenkins
+
+# Definindo o usuário 'jenkins' como o usuário padrão para execução do Jenkins
+USER jenkins
+
 # Etapa 1: Build
 FROM node:16-alpine AS build
 
