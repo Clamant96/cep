@@ -1,64 +1,82 @@
+// Initialize a LinkedHashMap / object to share between stages
+def pipelineContext = [:]
+
 pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'cep'
-        DOCKER_TAG = 'latest'
+        DOCKER_IMAGE_TAG = "my-app:build-${env.BUILD_ID}"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Configure') {
             steps {
-                git branch: 'main', url: 'https://github.com/Clamant96/cep'
+                echo 'Create parameters file'
             }
         }
-        
-        stage('Docker Build') { 
-            agent {
-                docker {
-                    image 'Clamant96/cep:latest'
-                    reuseNode true
-                }
-            }
-            steps {
-                echo "Building app using Docker Image" 
-            }
-        }
-
         stage('Build') {
             steps {
+                echo "Build docker image"
                 script {
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    dockerImage = docker.build("${env.DOCKER_IMAGE_TAG}",  '-f ./Dockerfile .')
+                    pipelineContext.dockerImage = dockerImage
                 }
             }
         }
-        
         stage('Run') {
             steps {
+                echo "Run docker image"
                 script {
-                    // Parar e remover contêiner antigo, se existir
-                    def container = docker.ps().find { it.names.contains('cep') }
-                    if (container) {
-                        docker.stop(container.id)
-                        docker.rm(container.id)
+                    pipelineContext.dockerContainer = pipelineContext.dockerImage.run()
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing the app"
+            }
+        }
+        stage('Push') {
+            steps {
+                echo "Pushing the Docker image to the registry"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying the Docker image"
+            }
+        }
+        stage('Verify') {
+            parallel {
+                stage('Verify home') {
+                    agent any
+                    steps {
+                        echo "HTTP request to verify home"
                     }
-                    
-                    // Executar novo contêiner
-                    docker.run("${DOCKER_IMAGE}:${DOCKER_TAG}", '-d -p 80:80 --name cep')
+                }
+                stage('Verify health check') {
+                    agent any
+                    steps {
+                        echo "HTTP request to verify application health check"
+                    }
+                }
+                stage('Verify regression tests') {
+                    agent any
+                    steps {
+                        echo "Running regression test suite"
+                    }
                 }
             }
         }
     }
-
     post {
         always {
-            echo 'Pipeline finalizado'
-        }
-        success {
-            echo 'Aplicação subida com sucesso'
-        }
-        failure {
-            echo 'Falha na pipeline'
+            echo "Stop Docker image"
+            script {
+                if (pipelineContext && pipelineContext.dockerContainer) {
+                    pipelineContext.dockerContainer.stop()
+                }
+            }
         }
     }
 }
