@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:20.11.1-alpine' }
-    }
+    agent any
 
     environment {
         DOCKER_IMAGE = 'cep'
