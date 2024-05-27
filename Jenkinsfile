@@ -1,10 +1,8 @@
 pipeline {
-    agent {
-        docker { image 'docker:latest' }
-    }
+    agent any
 
     environment {
-        DOCKER_IMAGE = 'cep'
+        DOCKER_IMAGE = 'docker'
         DOCKER_TAG = 'latest'
     }
 
@@ -18,8 +16,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Ensuring Docker is available
-                    sh 'docker --version'
                     docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
