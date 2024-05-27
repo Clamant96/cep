@@ -6,6 +6,11 @@ pipeline {
         }
     }
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Clamant96/cep'
+            }
+        }
         stage('Build') {
             steps {
                 script {
