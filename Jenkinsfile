@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'docker'
+        DOCKER_IMAGE = 'cep'
         DOCKER_TAG = 'latest'
     }
 
